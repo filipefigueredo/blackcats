@@ -1,0 +1,32 @@
+name: Destroy kitchen at the end of working hours
+
+on:
+  schedule:
+    # Triggers every day at 19:00
+    - cron:  '0 19 * * *'
+
+jobs:
+  terraform-destroy:
+    name: Destroy Azure Resources using Terraform
+    if: github.event.label.name == 'destroy'
+    runs-on: ubuntu-20.04
+    env:
+      ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
+
+    steps:
+      # Checkout repository
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # Retrieves the Terraform CLI used in the GitHub action workflow
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+      # Destroys terraform configuration
+      - name: Terraform Destroy
+        run: terraform destroy

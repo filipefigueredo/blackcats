@@ -1,14 +1,13 @@
 name: Create kitchen
 
 on:
-  issues:
-    types:
-      - labeled
+  push:
+    branches:    
+      - 'master'
 
 jobs:
   terraform-apply:
     name: Create / Apply changes to Azure Resources using Terraform
-    if: github.event.label.name == 'create'
     runs-on: ubuntu-20.04
     env:
       ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}

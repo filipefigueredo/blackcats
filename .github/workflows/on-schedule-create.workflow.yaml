@@ -1,0 +1,42 @@
+name: Create kitchen every day-of-week
+
+on:
+  schedule:
+    # Triggers At 06:00 on every day-of-week from Monday through Friday
+    - cron:  '0 6 * * 1-5'
+
+
+jobs:
+  terraform-apply:
+    name: Create / Apply changes to Azure Resources using Terraform
+    if: github.event.label.name == 'create'
+    runs-on: ubuntu-20.04
+    env:
+      ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
+
+    steps:
+      # Checkout repository
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # Retrieves the Terraform CLI used in the GitHub action workflow
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        #with:
+          #cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+      # Checks whether the repository has been properly formatted.
+      # If it isn't properly formatted this step will produce an error.
+      - name: Terraform Format
+        run: terraform fmt -check
+
+      # Initializes Terraform configurations.
+      - name: Terraform Init
+        run: terraform init
+
+      # Applies terraform configuration.
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
