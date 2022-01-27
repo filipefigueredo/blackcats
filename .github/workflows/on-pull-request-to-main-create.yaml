@@ -12,7 +12,7 @@ on:
 jobs:
   terraform-plan:
     name: Create Terraform plan for Azure Resources
-    if:  startsWith(github.head_ref, 'main/') 
+    if:  startsWith(github.head_ref, 'master/') 
     runs-on: ubuntu-latest
     env:
       ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
