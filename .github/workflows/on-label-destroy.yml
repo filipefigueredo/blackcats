@@ -1,4 +1,4 @@
-name: Create kitchen
+name: Destroy kitchen
 
 on:
   issues:
@@ -6,8 +6,8 @@ on:
       - labeled
 
 jobs:
-  terraform-apply:
-    name: Create / Apply changes to Azure Resources using Terraform
+  terraform-destroy:
+    name: Destroy Azure Resources using Terraform
     if: github.event.label.name == 'destroy'
     runs-on: ubuntu-latest
     env:
@@ -26,15 +26,6 @@ jobs:
         with:
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
-      # Checks whether the repository has been properly formatted.
-      # If it isn't properly formatted this step will produce an error.
-      - name: Terraform Format
-        run: terraform fmt -check
-
-      # Initializes Terraform configurations.
-      - name: Terraform Init
-        run: terraform init
-
-      # Applies terraform configuration.
-      - name: Terraform Apply
-        run: terraform apply -auto-approve
+      # Destroys terraform configuration
+      - name: Terraform Destroy
+        run: terraform destroy

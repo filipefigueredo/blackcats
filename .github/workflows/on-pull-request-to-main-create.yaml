@@ -1,4 +1,4 @@
-name: Create kitchen
+name: Update Pull Request with Terraform plan
 
 on:
   pull_request:
@@ -7,10 +7,10 @@ on:
       - synchronize
 
 jobs:
-  create-kitchen-terraform-plan:
-    name: Create Terraform plan for the kitchen
+  terraform-plan:
+    name: Create Terraform plan for Azure Resources
     if:  startsWith(github.head_ref, 'main/') 
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
       env:
         ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
         ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
