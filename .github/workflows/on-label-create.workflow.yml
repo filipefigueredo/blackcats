@@ -1,4 +1,4 @@
-name: Create kitchen
+name: Create kitchen on demand
 
 on:
   issues:
