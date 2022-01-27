@@ -37,21 +37,21 @@ jobs:
         id: fmt
         run: terraform fmt -check
 
-      ## Initializes Terraform configurations.
-      #- name: Terraform Init
-      #  id: init
-      #  run: terraform init
+      # Initializes Terraform configurations.
+      - name: Terraform Init
+        id: init
+        run: terraform init
 
       ## Validates Terraform configurations.
-      #- name: Terraform Validate
-      #  id: validate
-      #  run: terraform validate -no-color
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
 
-      ## Generates a Terraform plan.
-      #- name: Terraform Plan
-      #  id: plan
-      #  run: terraform plan -no-color
-      #  continue-on-error: true
+      # Generates a Terraform plan.
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -no-color
+        continue-on-error: true
 
       # Adds a comment to the pull request with the results of the format, init and plan steps.
       #- name: Update Pull Request
