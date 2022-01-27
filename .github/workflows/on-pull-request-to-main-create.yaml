@@ -33,9 +33,9 @@ jobs:
 
       # Checks whether the repository has been properly formatted.
       # If it isn't properly formatted this step will produce an error.
-      #- name: Terraform Format
-      #  id: fmt
-      #  run: terraform fmt -check
+      - name: Terraform Format
+        id: fmt
+        run: terraform fmt -check
 
       ## Initializes Terraform configurations.
       #- name: Terraform Init
