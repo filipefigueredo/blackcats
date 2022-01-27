@@ -1,0 +1,40 @@
+name: Create kitchen
+
+on:
+  issues:
+    types:
+      - labeled
+
+jobs:
+  create-kitchen:
+    name: Creates a kitchen
+    if: github.event.label.name == 'create'
+    runs-on: ubuntu-latest
+    env:
+      ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # Retrieves the Terraform CLI used in the GitHub action workflow
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+      # Checks whether the repository has been properly formatted.
+      # If it isn't properly formatted this step will produce an error.
+      - name: Terraform Format
+        run: terraform fmt -check
+
+      # Initializes Terraform configurations.
+      - name: Terraform Init
+        run: terraform init
+
+      # Applies terraform configuration.
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
