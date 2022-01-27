@@ -1,6 +1,9 @@
 name: Update Pull Request with Terraform plan
 
 on:
+  push:
+    branches:    
+      - 'master'
   pull_request:
     types:
       - opened
