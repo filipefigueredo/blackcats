@@ -23,8 +23,8 @@ jobs:
       # Retrieves the Terraform CLI used in the GitHub action workflow
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
-        #with:
-          #cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+        with:
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
       # Checks whether the repository has been properly formatted.
       # If it isn't properly formatted this step will produce an error.
