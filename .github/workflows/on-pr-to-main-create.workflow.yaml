@@ -1,15 +1,16 @@
 name: Update Pull Request with Terraform plan
 
 on:
-  pull_request:
+  pull_request_ref:
     types:
       - opened
       - synchronize
+    branch:
+      - master
 
 jobs:
   terraform-plan:
     name: Create Terraform plan for Azure Resources
-    if:  startsWith(github.head_ref, 'master')
     runs-on: ubuntu-20.04
 
     steps:
