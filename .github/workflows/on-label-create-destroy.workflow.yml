@@ -6,6 +6,7 @@ on:
       - labeled
 
 jobs:
+  # Apply Infrastructure configurations when a issue is labelled as 'create'
   terraform-apply:
     name: Create / Apply changes to Azure Resources using Terraform
     if: github.event.label.name == 'create'
@@ -34,3 +35,27 @@ jobs:
       # Applies terraform configuration.
       - name: Terraform Apply
         run: terraform apply -auto-approve
+  
+  terraform-destroy:
+    name: Destroy Azure Resources using Terraform
+    if: github.event.label.name == 'destroy'
+    runs-on: ubuntu-20.04
+
+    steps:
+      # Checkout repository
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # Retrieves the Terraform CLI used in the GitHub action workflow
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+      # Initializes Terraform configurations.
+      - name: Terraform Init
+        run: terraform init
+
+      # Destroys terraform configuration
+      - name: Terraform Destroy
+        run: terraform apply -destroy -auto-approve
