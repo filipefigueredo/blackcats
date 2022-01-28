@@ -6,7 +6,7 @@ on:
       - labeled
 
 jobs:
-  # Apply Infrastructure configurations when a issue is labelled as 'create'
+  # Apply Infrastructure configurations when a issue is labelled as "create".
   terraform-apply:
     name: Create / Apply changes to Azure Resources using Terraform
     if: github.event.label.name == 'create'
@@ -36,7 +36,8 @@ jobs:
       - name: Terraform Apply
         run: terraform apply -auto-approve
   
-  terraform-destroy:
+  # Apply Infrastructure configurations when a issue is labelled as "destroy".
+  terraform-destroy:  
     name: Destroy Azure Resources using Terraform
     if: github.event.label.name == 'destroy'
     runs-on: ubuntu-20.04
