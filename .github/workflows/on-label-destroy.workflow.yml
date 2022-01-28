@@ -28,4 +28,4 @@ jobs:
 
       # Destroys terraform configuration
       - name: Terraform Destroy
-        run: terraform destroy
+        run: terraform apply -destroy -auto-approve
