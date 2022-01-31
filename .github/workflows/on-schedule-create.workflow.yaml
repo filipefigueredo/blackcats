@@ -1,9 +1,16 @@
 name: Create kitchen every day-of-week
 
 on:
-  schedule:
-    # Triggers At 06:00 on every day-of-week from Monday through Friday
-    - cron:  '0 6 * * 1-5'
+  pull_request_ref:
+    types:
+      - opened
+      - synchronize
+    branch:
+      - master
+#on:
+  #schedule:
+    ## Triggers At 06:00 on every day-of-week from Monday through Friday
+    #- cron:  '0 6 * * 1-5'
 
 
 jobs:
