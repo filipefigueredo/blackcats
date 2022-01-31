@@ -4,8 +4,7 @@ on:
   issues:
     types:
       - labeled
-env:
-  terraformApiToken
+
 jobs:
   az-key-vault-secrets:
     name: Get Key Vault secrets
