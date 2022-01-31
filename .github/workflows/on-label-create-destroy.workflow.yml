@@ -30,7 +30,7 @@ jobs:
           secrets: 'terraformApiToken, test'
         id: getSecrets
 
-      - run |
+      - run: |
           echo ${{ steps.getSecrets.outputs.test }}
 
   # Apply Infrastructure configurations when a issue is labelled as "create".
