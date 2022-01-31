@@ -27,8 +27,11 @@ jobs:
         uses: Azure/get-keyvault-secrets@v1
         with: 
           keyvault: ${{ secrets.AZURE_KEY_VAULT_NAME }}
-          secrets: 'terraformApiToken'
+          secrets: 'terraformApiToken, test'
         id: getSecrets
+
+      - run |
+          echo ${{ steps.getSecrets.outputs.test }}
 
   # Apply Infrastructure configurations when a issue is labelled as "create".
   terraform-apply:
