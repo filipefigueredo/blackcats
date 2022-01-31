@@ -46,7 +46,7 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
-          cli_config_credentials_token: ${{ jobs.az-key-vault-secrets.outputs.terraformApiToken }}
+          cli_config_credentials_token: ${{ needs.az-key-vault-secrets.outputs.terraformApiToken }}
 
       # Checks whether the repository has been properly formatted.
       # If it isn't properly formatted this step will produce an error.
@@ -77,7 +77,7 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
-          cli_config_credentials_token: ${{ jobs.az-key-vault-secrets.outputs.terraformApiToken }}
+          cli_config_credentials_token: ${{ needs.az-key-vault-secrets.outputs.terraformApiToken }}
 
       # Initializes Terraform configurations.
       - name: Terraform Init
