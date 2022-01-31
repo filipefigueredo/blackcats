@@ -4,13 +4,39 @@ on:
   issues:
     types:
       - labeled
-
+env:
+  terraformApiToken
 jobs:
+  az-key-vault-secrets:
+    name: Get Key Vault secrets
+
+    runs-on: ubuntu-20.04
+
+    # Map step outputs to a job output
+    outputs:
+      terraformApiToken: ${{ steps.getSecrets.outputs.terraformApiToken }}
+    
+    steps:
+      # Azure login with SP credentials
+      - name: Azure Login
+        uses: Azure/login@v1 
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      # Retrieve   
+      - name: Get secrets from KV 
+        uses: Azure/get-keyvault-secrets@v1
+        with: 
+          keyvault: ${{ secrets.AZURE_KEY_VAULT_NAME }}
+          secrets: 'terraformApiToken'
+        id: getSecrets
+
   # Apply Infrastructure configurations when a issue is labelled as "create".
   terraform-apply:
     name: Create / Apply changes to Azure Resources using Terraform
-    if: github.event.label.name == 'create'
     runs-on: ubuntu-20.04
+    needs: az-key-vault-secrets
+    if: github.event.label.name == 'create'
 
     steps:
       # Checkout repository
@@ -21,7 +47,7 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
-          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+          cli_config_credentials_token: ${{ jobs.az-key-vault-secrets.outputs.terraformApiToken }}
 
       # Checks whether the repository has been properly formatted.
       # If it isn't properly formatted this step will produce an error.
@@ -39,8 +65,9 @@ jobs:
   # Apply Infrastructure configurations when a issue is labelled as "destroy".
   terraform-destroy:  
     name: Destroy Azure Resources using Terraform
-    if: github.event.label.name == 'destroy'
     runs-on: ubuntu-20.04
+    needs: az-key-vault-secrets
+    if: github.event.label.name == 'destroy'
 
     steps:
       # Checkout repository
@@ -51,7 +78,7 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
-          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+          cli_config_credentials_token: ${{ jobs.az-key-vault-secrets.outputs.terraformApiToken }}
 
       # Initializes Terraform configurations.
       - name: Terraform Init
