@@ -22,7 +22,7 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      # Retrieve Key Vault Secrets
+      # Retrieve secrects from Azure Key Vault
       - name: Get secrets from KV 
         uses: Azure/get-keyvault-secrets@v1
         with: 
@@ -34,24 +34,10 @@ jobs:
   terraform-apply:
     name: Create / Apply changes to Azure Resources using Terraform
     runs-on: ubuntu-20.04
-    #needs: az-key-vault-secrets
+    needs: az-key-vault-secrets
     if: github.event.label.name == 'create'
 
     steps:
-          # Azure login with SP credentials
-      - name: Azure Login
-        uses: Azure/login@v1 
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      # Retrieve Key Vault Secrets
-      - name: Get secrets from KV 
-        uses: Azure/get-keyvault-secrets@v1
-        with: 
-          keyvault: ${{ secrets.AZURE_KEY_VAULT_NAME }}
-          secrets: 'terraformApiToken'
-        id: getSecrets
-
       # Checkout repository
       - name: Checkout
         uses: actions/checkout@v2
@@ -60,7 +46,7 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
-          cli_config_credentials_token: ${{ steps.getSecrets.outputs.terraformApiToken }}
+          cli_config_credentials_token: ${{ needs.az-key-vault-secrets.outputs.terraformApiToken }}
 
       # Checks whether the repository has been properly formatted.
       # If it isn't properly formatted this step will produce an error.
