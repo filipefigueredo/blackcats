@@ -14,6 +14,7 @@ jobs:
     # Map step outputs to a job output
     outputs:
       terraformApiToken: ${{ steps.jobOutputs.outputs.terraformApiToken }}
+      test: ${{ steps.jobOutputs.outputs.test }}
     
     steps:
       # Azure login with SP credentials
@@ -33,7 +34,7 @@ jobs:
       - name: Save job outputs        
         run: |
           echo "::set-output name=terraformApiToken::${{ steps.getSecrets.outputs.terraformApiToken }}"
-          echo "${{ steps.getSecrets.outputs.test }}"
+          echo "::set-output name=terraformApiToken::${{ steps.getSecrets.outputs.test }}"
         id: jobOutputs
 
   # Apply Infrastructure configurations when a issue is labelled as "create".
@@ -47,7 +48,8 @@ jobs:
       # Checkout repository
       - name: Checkout
         uses: actions/checkout@v2
-
+      - run: |
+          echo "${{ needs.az-key-vault-secrets.outputs.terraformApiToken }}"
       # Retrieves the Terraform CLI used in the GitHub action workflow
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
