@@ -13,7 +13,7 @@ jobs:
 
     # Map step outputs to a job output
     outputs:
-      terraformApiToken: ${{ steps.getSecrets.outputs.terraformApiToken }}
+      terraformApiToken: ${{ steps.jobOutputs.outputs.terraformApiToken }}
     
     steps:
       # Azure login with SP credentials
@@ -22,13 +22,19 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      # Retrieve secrects from Azure Key Vault
+      # Retrieve secrets from Azure Key Vault
       - name: Get secrets from KV 
         uses: Azure/get-keyvault-secrets@v1
         with: 
           keyvault: ${{ secrets.AZURE_KEY_VAULT_NAME }}
-          secrets: 'terraformApiToken'
+          secrets: 'terraformApiToken, test'
         id: getSecrets
+
+      - name: Save job outputs        
+        run: |
+          echo "::set-output name=terraformApiToken::${{ steps.getSecrets.outputs.terraformApiToken }}"
+          echo "${{ steps.getSecrets.outputs.test }}"
+        id: jobOutputs
 
   # Apply Infrastructure configurations when a issue is labelled as "create".
   terraform-apply:
