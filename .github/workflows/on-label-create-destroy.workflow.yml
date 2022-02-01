@@ -4,10 +4,6 @@ name: Create / Destroy a kitchen on demand
 #  issues:
 #    types:
 #      - labeled
-on:
-  push:
-    branches:    
-      - 'master'
 
 jobs:  
   # Apply Infrastructure configurations when a issue is labelled as "create".
