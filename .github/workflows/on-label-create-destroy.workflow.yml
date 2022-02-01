@@ -1,4 +1,4 @@
-name: Create kitchen on demand
+name: Create / Destroy a kitchen on demand
 
 on:
   issues:
