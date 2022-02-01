@@ -9,33 +9,7 @@ on:
     branches:    
       - 'master'
 
-jobs:
-  #az-key-vault-secrets:
-  #  name: Get Key Vault secrets
-
-  #  runs-on: ubuntu-20.04
-
-  #  # Map step outputs to a job output
-  #  outputs:
-  #    terraformApiToken: ${{ steps.jobOutputs.outputs.terraformApiToken }}
-
-  #  steps:
-  #    # Azure login with SP credentials
-  #    - name: Azure Login
-  #      uses: Azure/login@v1
-  #      with:
-  #        creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-  #    # Retrieve secrets from Azure Key Vault
-  #    - name: Get secrets from KV
-  #      uses: Azure/get-keyvault-secrets@v1
-  #      with:
-  #        keyvault: ${{ secrets.AZURE_KEY_VAULT_NAME }}
-  #        # comma separated list of secret keys that need to be fetched from the Key Vault
-  #        secrets: 'terraformApiToken'
-  #      id: getSecrets
-
-  # Apply Infrastructure configurations when a issue is labelled as "create".
+jobs:  
   terraform-apply:
     name: Create / Apply changes to Azure Resources using Terraform
     #needs: az-key-vault-secrets
@@ -44,7 +18,7 @@ jobs:
     with:
       key_vault_name: ${{ secrets.AZURE_KEY_VAULT_NAME }}
     secrets:
-      key_vault_credentials: ${{ secrets.AZURE_CREDENTIALS }}
+      #key_vault_credentials: ${{ secrets.AZURE_CREDENTIALS }}
 
 
   # Apply Infrastructure configurations when a issue is labelled as "destroy".
