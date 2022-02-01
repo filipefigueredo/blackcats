@@ -36,7 +36,7 @@ jobs:
     name: Create / Apply changes to Azure Resources using Terraform
     #needs: az-key-vault-secrets
     if: github.event.label.name == 'create'
-    uses: ./.github/worflows/terraform-create.template.yaml
+    uses: ./.github/workflows/terraform-create.template.yaml
     with:
       key_vault_name: ${{ secrets.AZURE_KEY_VAULT_NAME }}
     secrets:
