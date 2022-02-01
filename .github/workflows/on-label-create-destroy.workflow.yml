@@ -16,7 +16,7 @@ jobs:
     #if: github.event.label.name == 'create'
     uses: ./.github/workflows/terraform-create.template.yaml
     with:
-      key_vault_name: ${{ secrets.AZURE_KEY_VAULT_NAME }}
+      key_vault_name: 'KVFFS' #${{ secrets.AZURE_KEY_VAULT_NAME }}
     #secrets:
       #key_vault_credentials: ${{ secrets.AZURE_CREDENTIALS }}
 
