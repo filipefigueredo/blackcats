@@ -16,7 +16,7 @@ on:
     secrets:
       key_vault_credentials:
         description: credentials to access Key Vault
-        required: true
+        required: false
 
 jobs:
   az-key-vault-secrets:
