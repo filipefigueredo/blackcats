@@ -17,6 +17,7 @@ jobs:
     uses: ./.github/workflows/terraform-create.template.yaml
     with:
       key_vault_name: 'myKVFFS' #${{ secrets.AZURE_KEY_VAULT_NAME }}
+      secrets_keys_list: 'TF_API_TOKEN'
     secrets:
       key_vault_credentials: ${{ secrets.AZURE_CREDENTIALS }}
 
