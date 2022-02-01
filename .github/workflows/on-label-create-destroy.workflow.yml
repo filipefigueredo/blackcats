@@ -10,10 +10,10 @@ on:
       - 'master'
 
 jobs:  
-  terraform-apply:
-    name: Create / Apply changes to Azure Resources using Terraform
-    #needs: az-key-vault-secrets
-    #if: github.event.label.name == 'create'
+  # Apply Infrastructure configurations when a issue is labelled as "create".
+  create-kitchen:
+    name: Create kitchen resources
+    if: github.event.label.name == 'create'
     uses: ./.github/workflows/terraform-create.template.yaml
     with:      
       secrets_keys_list: 'terraformApiToken'
@@ -21,6 +21,16 @@ jobs:
       key_vault_credentials: ${{ secrets.AZURE_CREDENTIALS }}
       key_vault_name: ${{ secrets.AZURE_KEY_VAULT_NAME }}
 
+  # Destroy Infrastructure configurations when a issue is labelled as "create".
+  create-kitchen:
+    name: Create kitchen resources
+    if: github.event.label.name == 'create'
+    uses: ./.github/workflows/terraform-create.template.yaml
+    with:      
+      secrets_keys_list: 'terraformApiToken'
+    secrets:
+      key_vault_credentials: ${{ secrets.AZURE_CREDENTIALS }}
+      key_vault_name: ${{ secrets.AZURE_KEY_VAULT_NAME }}
 
   # Apply Infrastructure configurations when a issue is labelled as "destroy".
   #terraform-destroy:

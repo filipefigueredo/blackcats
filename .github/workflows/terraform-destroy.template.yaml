@@ -1,4 +1,4 @@
-name: Terraform Apply
+name: Terraform Destroy
 
 on:
   workflow_call:
@@ -17,8 +17,8 @@ on:
         required: true
 
 jobs:
-  terraform-apply:
-    name: Apply Terraform configurations
+  terraform-destroy:
+    name: Destroy Terraform configurations
 
     runs-on: ubuntu-20.04
 
@@ -57,6 +57,6 @@ jobs:
       - name: Terraform Init
         run: terraform init
 
-      # Applies terraform configuration.
-      - name: Terraform Apply
-        run: terraform apply -auto-approve
+      # Destroys terraform configuration
+      - name: Terraform Destroy
+        run: terraform apply -destroy -auto-approve
