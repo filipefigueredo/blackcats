@@ -15,11 +15,11 @@ jobs:
     #needs: az-key-vault-secrets
     #if: github.event.label.name == 'create'
     uses: ./.github/workflows/terraform-create.template.yaml
-    with:
-      key_vault_name: 'myKVFFS' #${{ secrets.AZURE_KEY_VAULT_NAME }}
-      secrets_keys_list: 'TF_API_TOKEN'
+    with:      
+      secrets_keys_list: 'terraformApiToken'
     secrets:
       key_vault_credentials: ${{ secrets.AZURE_CREDENTIALS }}
+      key_vault_name: ${{ secrets.AZURE_KEY_VAULT_NAME }}
 
 
   # Apply Infrastructure configurations when a issue is labelled as "destroy".
