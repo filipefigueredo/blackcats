@@ -1,9 +1,9 @@
 name: Create / Destroy a kitchen on demand
 
-#on:
-#  issues:
-#    types:
-#      - labeled
+on:
+  issues:
+    types:
+      - labeled
 
 jobs:  
   # Apply Infrastructure configurations when a issue is labelled as "create".
@@ -27,10 +27,3 @@ jobs:
     secrets:
       key_vault_credentials: ${{ secrets.AZURE_CREDENTIALS }}
       key_vault_name: ${{ secrets.AZURE_KEY_VAULT_NAME }}
-
-  # Apply Infrastructure configurations when a issue is labelled as "destroy".
-  #terraform-destroy:
-  #  name: Destroy Azure Resources using Terraform
-  #  runs-on: ubuntu-20.04
-  #  #needs: az-key-vault-secrets
-  #  if: github.event.label.name == 'destroys'
