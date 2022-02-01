@@ -24,10 +24,6 @@ jobs:
 
     runs-on: ubuntu-20.04
 
-    ## Map step outputs to a job output
-    #outputs:
-    #  terraformApiToken: ${{ steps.jobOutputs.outputs.terraformApiToken }}
-
     steps:
       # Azure login with SP credentials
       - name: Azure Login
