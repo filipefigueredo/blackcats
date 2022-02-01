@@ -6,55 +6,63 @@ on:
       - labeled
 
 jobs:
-  az-key-vault-secrets:
-    name: Get Key Vault secrets
+  #az-key-vault-secrets:
+  #  name: Get Key Vault secrets
 
-    runs-on: ubuntu-20.04
+  #  runs-on: ubuntu-20.04
 
-    # Map step outputs to a job output
-    outputs:
-      terraformApiToken: ${{ steps.jobOutputs.outputs.terraformApiToken }}
-      test: ${{ steps.jobOutputs.outputs.test }}
-    
-    steps:
-      # Azure login with SP credentials
-      - name: Azure Login
-        uses: Azure/login@v1 
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+  #  # Map step outputs to a job output
+  #  outputs:
+  #    terraformApiToken: ${{ steps.jobOutputs.outputs.terraformApiToken }}
 
-      # Retrieve secrets from Azure Key Vault
-      - name: Get secrets from KV 
-        uses: Azure/get-keyvault-secrets@v1
-        with: 
-          keyvault: ${{ secrets.AZURE_KEY_VAULT_NAME }}
-          secrets: 'terraformApiToken, test'
-        id: getSecrets
+  #  steps:
+  #    # Azure login with SP credentials
+  #    - name: Azure Login
+  #      uses: Azure/login@v1
+  #      with:
+  #        creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Save job outputs        
-        run: |
-          echo "::set-output name=terraformApiToken::${{ steps.getSecrets.outputs.terraformApiToken }}"
-          echo "::set-output name=terraformApiToken::${{ steps.getSecrets.outputs.test }}"
-        id: jobOutputs
+  #    # Retrieve secrets from Azure Key Vault
+  #    - name: Get secrets from KV
+  #      uses: Azure/get-keyvault-secrets@v1
+  #      with:
+  #        keyvault: ${{ secrets.AZURE_KEY_VAULT_NAME }}
+  #        # comma separated list of secret keys that need to be fetched from the Key Vault
+  #        secrets: 'terraformApiToken'
+  #      id: getSecrets
 
   # Apply Infrastructure configurations when a issue is labelled as "create".
   terraform-apply:
     name: Create / Apply changes to Azure Resources using Terraform
     runs-on: ubuntu-20.04
-    needs: az-key-vault-secrets
+    #needs: az-key-vault-secrets
     if: github.event.label.name == 'create'
 
     steps:
+      # Azure login with SP credentials
+      - name: Azure Login
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      # Retrieve secrets from Azure Key Vault
+      - name: Get secrets from KV
+        uses: Azure/get-keyvault-secrets@v1
+        with:
+          keyvault: ${{ secrets.AZURE_KEY_VAULT_NAME }}
+          # comma separated list of secret keys that need to be fetched from the Key Vault
+          secrets: "terraformApiToken"
+        id: getSecrets
+
       # Checkout repository
       - name: Checkout
         uses: actions/checkout@v2
-      - run: |
-          echo "${{ needs.az-key-vault-secrets.outputs.terraformApiToken }}"
+
       # Retrieves the Terraform CLI used in the GitHub action workflow
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
-          cli_config_credentials_token: ${{ needs.az-key-vault-secrets.outputs.terraformApiToken }}
+          cli_config_credentials_token: ${{ steps.getSecrets.outputs.terraformApiToken }}
 
       # Checks whether the repository has been properly formatted.
       # If it isn't properly formatted this step will produce an error.
@@ -68,15 +76,30 @@ jobs:
       # Applies terraform configuration.
       - name: Terraform Apply
         run: terraform apply -auto-approve
-  
+
   # Apply Infrastructure configurations when a issue is labelled as "destroy".
-  terraform-destroy:  
+  terraform-destroy:
     name: Destroy Azure Resources using Terraform
     runs-on: ubuntu-20.04
     needs: az-key-vault-secrets
     if: github.event.label.name == 'destroy'
 
     steps:
+      # Azure login with SP credentials
+      - name: Azure Login
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      # Retrieve secrets from Azure Key Vault
+      - name: Get secrets from KV
+        uses: Azure/get-keyvault-secrets@v1
+        with:
+          keyvault: ${{ secrets.AZURE_KEY_VAULT_NAME }}
+          # comma separated list of secret keys that need to be fetched from the Key Vault
+          secrets: "terraformApiToken"
+        id: getSecrets
+
       # Checkout repository
       - name: Checkout
         uses: actions/checkout@v2
@@ -85,7 +108,7 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
-          cli_config_credentials_token: ${{ needs.az-key-vault-secrets.outputs.terraformApiToken }}
+          cli_config_credentials_token: ${{ steps.getSecrets.outputs.terraformApiToken }}
 
       # Initializes Terraform configurations.
       - name: Terraform Init
