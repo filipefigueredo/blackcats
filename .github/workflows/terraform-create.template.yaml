@@ -44,7 +44,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-       Retrieves the Terraform CLI used in the GitHub action workflow
+      # Retrieves the Terraform CLI used in the GitHub action workflow
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
