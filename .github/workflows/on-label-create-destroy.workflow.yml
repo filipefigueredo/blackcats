@@ -22,10 +22,10 @@ jobs:
       key_vault_name: ${{ secrets.AZURE_KEY_VAULT_NAME }}
 
   # Destroy Infrastructure configurations when a issue is labelled as "create".
-  create-kitchen:
-    name: Create kitchen resources
-    if: github.event.label.name == 'create'
-    uses: ./.github/workflows/terraform-create.template.yaml
+  destroy-kitchen:
+    name: Destroy kitchen resources
+    if: github.event.label.name == 'destroy'
+    uses: ./.github/workflows/terraform-destroy.template.yaml
     with:      
       secrets_keys_list: 'terraformApiToken'
     secrets:
