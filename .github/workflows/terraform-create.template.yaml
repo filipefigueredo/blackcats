@@ -5,7 +5,8 @@ on:
     inputs:
       key_vault_name:
         description: Key Vault name
-        required: true
+        default: ${{ secrets.AZURE_KEY_VAULT_NAME }}
+        required: false
         type: string      
       secrets_keys_list:
         description: Comma separated list of secret keys that need to be fetched from the Key Vault
