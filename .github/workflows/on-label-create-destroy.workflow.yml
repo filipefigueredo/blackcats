@@ -39,7 +39,7 @@ jobs:
   terraform-apply:
     name: Create / Apply changes to Azure Resources using Terraform
     #needs: az-key-vault-secrets
-    if: github.event.label.name == 'create'
+    #if: github.event.label.name == 'create'
     uses: ./.github/workflows/terraform-create.template.yaml
     with:
       key_vault_name: ${{ secrets.AZURE_KEY_VAULT_NAME }}
@@ -48,42 +48,8 @@ jobs:
 
 
   # Apply Infrastructure configurations when a issue is labelled as "destroy".
-  terraform-destroy:
-    name: Destroy Azure Resources using Terraform
-    runs-on: ubuntu-20.04
-    #needs: az-key-vault-secrets
-    if: github.event.label.name == 'destroys'
-
-    steps:
-      # Azure login with SP credentials
-      - name: Azure Login
-        uses: Azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      # Retrieve secrets from Azure Key Vault
-      - name: Get secrets from KV
-        uses: Azure/get-keyvault-secrets@v1
-        with:
-          keyvault: ${{ secrets.AZURE_KEY_VAULT_NAME }}
-          # comma separated list of secret keys that need to be fetched from the Key Vault
-          secrets: "terraformApiToken"
-        id: getSecrets
-
-      # Checkout repository
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      # Retrieves the Terraform CLI used in the GitHub action workflow
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v1
-        with:
-          cli_config_credentials_token: ${{ steps.getSecrets.outputs.terraformApiToken }}
-
-      # Initializes Terraform configurations.
-      - name: Terraform Init
-        run: terraform init
-
-      # Destroys terraform configuration
-      - name: Terraform Destroy
-        run: terraform apply -destroy -auto-approve
+  #terraform-destroy:
+  #  name: Destroy Azure Resources using Terraform
+  #  runs-on: ubuntu-20.04
+  #  #needs: az-key-vault-secrets
+  #  if: github.event.label.name == 'destroys'
