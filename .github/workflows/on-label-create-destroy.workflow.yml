@@ -18,7 +18,7 @@ jobs:
     with:
       key_vault_name: 'KVFFS' #${{ secrets.AZURE_KEY_VAULT_NAME }}
     secrets:
-      key_vault_credentials: 'KVFFS' #${{ secrets.AZURE_CREDENTIALS }}
+      key_vault_credentials: ${{ secrets.AZURE_CREDENTIALS }}
 
 
   # Apply Infrastructure configurations when a issue is labelled as "destroy".
