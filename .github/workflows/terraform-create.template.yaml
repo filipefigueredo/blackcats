@@ -1,4 +1,4 @@
-name: Terraform create
+name: Terraform Apply
 
 on:
   workflow_call:
@@ -19,8 +19,8 @@ on:
         required: false
 
 jobs:
-  az-key-vault-secrets:
-    name: Get Key Vault secrets
+  terraform-apply:
+    name: Apply Terraform configurations
 
     runs-on: ubuntu-20.04
 
