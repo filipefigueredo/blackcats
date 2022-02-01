@@ -1,9 +1,13 @@
 name: Create / Destroy a kitchen on demand
 
+#on:
+#  issues:
+#    types:
+#      - labeled
 on:
-  issues:
-    types:
-      - labeled
+  push:
+    branches:    
+      - 'master'
 
 jobs:
   #az-key-vault-secrets:
