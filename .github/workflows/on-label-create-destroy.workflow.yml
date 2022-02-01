@@ -81,7 +81,7 @@ jobs:
   terraform-destroy:
     name: Destroy Azure Resources using Terraform
     runs-on: ubuntu-20.04
-    needs: az-key-vault-secrets
+    #needs: az-key-vault-secrets
     if: github.event.label.name == 'destroy'
 
     steps:
