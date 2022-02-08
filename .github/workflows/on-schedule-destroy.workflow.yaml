@@ -1,13 +1,6 @@
 name: Destroy kitchen at the end of the day
 
 on:
-  pull_request_ref:
-    types:
-      - opened
-      - synchronize
-    branch:
-      - master
-on:
   schedule:
     # Triggers every day at 19:00
     - cron:  '0 19 * * *'
