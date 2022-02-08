@@ -17,7 +17,7 @@ jobs:
       key_vault_credentials: ${{ secrets.AZURE_CREDENTIALS }}
       key_vault_name: ${{ secrets.AZURE_KEY_VAULT_NAME }}
 
-  # Destroy Infrastructure configurations when a issue is labelled as "create".
+  # Destroy Infrastructure configurations when a issue is labelled as "destroy".
   destroy-kitchen:
     name: Destroy kitchen resources
     if: github.event.label.name == 'destroy'

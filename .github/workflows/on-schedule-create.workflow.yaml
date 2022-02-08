@@ -1,43 +1,19 @@
-name: Create kitchen every day-of-week
+name: Create kitchen every weekday
 
 on:
-  pull_request_ref:
-    types:
-      - opened
-      - synchronize
-    branch:
-      - master
-#on:
-  #schedule:
-    ## Triggers At 06:00 on every day-of-week from Monday through Friday
-    #- cron:  '0 6 * * 1-5'
+  schedule:
+    # Triggers At 06:00 on every day-of-week from Monday through Friday
+    - cron:  '0 6 * * 1-5'
 
 
-jobs:
-  terraform-apply:
-    name: Create / Apply changes to Azure Resources using Terraform
-    runs-on: ubuntu-20.04
-
-    steps:
-      # Checkout repository
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      # Retrieves the Terraform CLI used in the GitHub action workflow
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v1
-        with:
-          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
-
-      # Checks whether the repository has been properly formatted.
-      # If it isn't properly formatted this step will produce an error.
-      - name: Terraform Format
-        run: terraform fmt -check
-
-      # Initializes Terraform configurations.
-      - name: Terraform Init
-        run: terraform init
-
-      # Applies terraform configuration.
-      - name: Terraform Apply
-        run: terraform apply -auto-approve
+jobs:  
+  # Apply Infrastructure configurations when a issue is labelled as "create".
+  create-kitchen:
+    name: Create kitchen resources
+    if: github.event.label.name == 'create'
+    uses: ./.github/workflows/terraform-create.template.yaml
+    with:      
+      secrets_keys_list: 'terraformApiToken'
+    secrets:
+      key_vault_credentials: ${{ secrets.AZURE_CREDENTIALS }}
+      key_vault_name: ${{ secrets.AZURE_KEY_VAULT_NAME }}
