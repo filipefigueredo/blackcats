@@ -12,7 +12,7 @@ on:
 jobs:
   # Create Terraform plan when a pull request is opened or updated
   terraform-plan:
-    name: Create Terraform plan
+    name: Update PR with TF Plan
     uses: ./.github/workflows/terraform-plan.template.yaml
     with:
       secrets_keys_list: "terraformApiToken"
