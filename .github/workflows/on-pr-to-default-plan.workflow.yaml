@@ -1,0 +1,21 @@
+name: Update Pull Request with Terraform plan
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+    branches:
+      - $default-branch
+
+jobs:
+  # Create Terraform plan when a pull request is opened or updated
+  terraform-plan:
+    name: Create Terraform plan
+    uses: ./.github/workflows/terraform-plan.template.yaml
+    with:
+      secrets_keys_list: "terraformApiToken"
+    secrets:
+      key_vault_credentials: ${{ secrets.AZURE_CREDENTIALS }}
+      key_vault_name: ${{ secrets.AZURE_KEY_VAULT_NAME }}
