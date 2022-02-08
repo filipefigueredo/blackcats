@@ -3,7 +3,6 @@ name: Update PR with TF plan
 on:
   pull_request:
     types: [opened, synchronize, reopened]
-      - opened
     branches:    
       - 'master'
     paths:
