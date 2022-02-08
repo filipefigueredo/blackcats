@@ -2,9 +2,7 @@ name: Create kitchen
 
 on:
   push:
-    branches:
-      #- $default-branch
-      - master
+    branches: [master]
 
 jobs:
   # Apply Infrastructure configurations when a issue is labelled as "create".
