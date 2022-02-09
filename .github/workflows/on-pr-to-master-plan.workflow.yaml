@@ -12,7 +12,7 @@ jobs:
   # Apply Infrastructure configurations when a issue is labelled as "create".
   kitchen-plan:
     name: Submit kitchen TF plan
-    uses: ./.github/workflows/terraform-plan.template.yaml
+    uses: filipefigueredo/blackcats/.github/workflows/terraform-plan.template.yaml@main
     with:
       secrets_keys_list: "terraformApiToken"
     secrets:
