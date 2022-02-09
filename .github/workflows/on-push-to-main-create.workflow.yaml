@@ -3,6 +3,12 @@ name: Create kitchen
 on:
   push:
     branches: [master]
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:    
+      - 'master'
+    paths:
+      - '**.tf'
 
 jobs:
   # Apply Infrastructure configurations when a issue is labelled as "create".
