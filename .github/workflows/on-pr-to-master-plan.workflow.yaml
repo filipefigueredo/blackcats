@@ -5,7 +5,7 @@
 #    types: [opened, synchronize, reopened]
 #    branches: [master]
 
-name: Create kitchen
+name: Update PR with kitchen TF plan
 
 on:
   push:
@@ -13,8 +13,8 @@ on:
 
 jobs:
   # Apply Infrastructure configurations when a issue is labelled as "create".
-  create-kitchen:
-    name: Create kitchen resources
+  kitchen-plan:
+    name: Submit kitchen TF plan
     uses: ./.github/workflows/terraform-create.template.yaml
     with:
       secrets_keys_list: "terraformApiToken"
