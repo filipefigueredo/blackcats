@@ -5,16 +5,21 @@ on:
     types: [opened, synchronize, reopened]
     branches:    
       - 'master'
-    paths:
-      - '**.tf'
 
 jobs:
   # Create Terraform plan when a pull request is opened or updated.
   kitchen-plan:
     name: Create kitchen resources
-    uses: ./.github/workflows/terraform-plan.template.yaml
-    with:
-      secrets_keys_list: "terraformApiToken"
-    secrets:
-      key_vault_credentials: ${{ secrets.AZURE_CREDENTIALS }}
-      key_vault_name: ${{ secrets.AZURE_KEY_VAULT_NAME }}
+    runs-on: ubuntu-20.04
+    #uses: ./.github/workflows/terraform-plan.template.yaml
+    #with:
+    #  secrets_keys_list: "terraformApiToken"
+    #secrets:
+    #  key_vault_credentials: ${{ secrets.AZURE_CREDENTIALS }}
+    #  key_vault_name: ${{ secrets.AZURE_KEY_VAULT_NAME }}
+    steps:
+      # Azure login with SP credentials
+      - name: Azure Login
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
