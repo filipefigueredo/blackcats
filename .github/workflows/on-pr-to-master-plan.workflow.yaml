@@ -1,9 +1,11 @@
-name: Update PR with TF plan
+#name: Update PR with TF plan
 
 #on:
 #  pull_request:
 #    types: [opened, synchronize, reopened]
 #    branches: [master]
+
+name: Create kitchen
 
 on:
   push:
@@ -20,15 +22,4 @@ jobs:
       key_vault_credentials: ${{ secrets.AZURE_CREDENTIALS }}
       key_vault_name: ${{ secrets.AZURE_KEY_VAULT_NAME }}
 
-
-jobs:
-  # Apply Infrastructure configurations when a issue is labelled as "create".
-  create-kitchen:
-    name: Create kitchen resources
-    uses: ./.github/workflows/terraform-create.template.yaml
-    with:
-      secrets_keys_list: "terraformApiToken"
-    secrets:
-      key_vault_credentials: ${{ secrets.AZURE_CREDENTIALS }}
-      key_vault_name: ${{ secrets.AZURE_KEY_VAULT_NAME }}
 
