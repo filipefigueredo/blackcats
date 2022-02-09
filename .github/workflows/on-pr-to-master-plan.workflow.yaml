@@ -1,17 +1,12 @@
 #name: Update PR with TF plan
 
-#on:
-#  pull_request:
-#    types: [opened, synchronize, reopened]
-#    branches: [master]
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [master]
 
 name: Update PR with kitchen TF plan
 
-on:
-  #push:
-  #  branches: [master]
-  pull_request:
-    types: [opened, reopened]
 
 jobs:
   # Apply Infrastructure configurations when a issue is labelled as "create".
