@@ -10,7 +10,6 @@ name: Update PR with kitchen TF plan
 on:
   push:
     branches: [master]
-on:
   pull_request:
     types: [opened, reopened]
 
