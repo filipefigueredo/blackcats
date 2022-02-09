@@ -3,8 +3,7 @@ name: Update PR with TF plan
 on:
   pull_request:
     types: [opened, synchronize, reopened]
-    branches:    
-      - 'master'
+    branches: [master]
 
 jobs:
   # Create Terraform plan when a pull request is opened or updated.
