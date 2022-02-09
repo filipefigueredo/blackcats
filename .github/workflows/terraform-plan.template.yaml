@@ -27,15 +27,15 @@ jobs:
       - name: Azure Login
         uses: Azure/login@v1
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }} #${{ secrets.key_vault_credentials }}
+          creds: ${{ secrets.key_vault_credentials }}
 
       # Retrieve secrets from Azure Key Vault
       - name: Get secrets from KV
         uses: Azure/get-keyvault-secrets@v1
         with:
-          keyvault: ${{ secrets.AZURE_KEY_VAULT_NAME }} #${{ secrets.key_vault_name }}
+          keyvault: ${{ secrets.key_vault_name }}
           # comma separated list of secret keys that need to be fetched from the Key Vault
-          secrets: "terraformApiToken" #${{ inputs.secrets_keys_list }}
+          secrets: ${{ inputs.secrets_keys_list }}
         id: getSecrets
       
       # Checkout repository
