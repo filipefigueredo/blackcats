@@ -22,7 +22,21 @@ jobs:
   # Post a comment kitchen's TF plan.
   submit-plan-result:
     name: Submit TF plan
-    #needs: kitchen-plan
+    needs: kitchen-plan
     uses: filipefigueredo/blackcats/.github/workflows/submit-pr-comment.template.yaml@master
     with:
-      comment_text: '👋 Thanks for reporting!'
+      comment_text: |
+        '#### Terraform Format and Style 🖌\`${{ jobs.kitchen-plan.formatStatus }}\`
+            #### Terraform Initialization ⚙️\`${{ jobs.kitchen-plan.initStatus }}\`
+            #### Terraform Validation 🤖\`${{ jobs.kitchen-plan.validationStatus }}\`
+            #### Terraform Plan 📖\`${{ jobs.kitchen-plan.planStatus }}\`
+
+            <details><summary>Show Plan</summary>
+
+            \`\`\`\n
+            ${{ jobs.kitchen-plan.planDetails }}
+            \`\`\`
+
+            </details>
+
+            *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*'
