@@ -22,7 +22,7 @@ jobs:
   # Post a comment kitchen's TF plan.
   submit-plan-result:
     name: Submit TF plan
-    needs: kitchen-plan
+    #needs: kitchen-plan
     uses: filipefigueredo/blackcats/.github/workflows/submit-pr-comment.template.yaml@master
     with:
       comment_text: '👋 Thanks for reporting!'
