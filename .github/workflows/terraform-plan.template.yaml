@@ -9,15 +9,20 @@ on:
         type: string
 
     outputs:
-      formatStatus: 
+      formatStatus:
+        description: "Format status"
         value: ${{ jobs.terraform-plan.steps.fmt.outcome }}
-      initStatus: 
+      initStatus:
+        description: "Init status"
         value: ${{ jobs.terraform-plan.steps.init.outcome }}
-      validationStatus: 
+      validationStatus:
+        description: "Validation status"
         value: ${{ jobs.terraform-plan.steps.validate.outcome }}
-      planStatus: 
+      planStatus:
+        description: "Plan status"
         value: ${{ jobs.terraform-plan.steps.plan.outcome }}
-      planDetails: 
+      planDetails:
+        description: "Plan details"
         value: ${{ jobs.terraform-plan.steps.plan.outputs.stdout }}
 
     secrets:
