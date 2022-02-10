@@ -22,7 +22,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const output = `${{ steps.plan.outputs.stdout }}`;
+            const output = `${{ inputs.comment_text }}`;
 
             github.rest.issues.createComment({
               issue_number: context.issue.number,
