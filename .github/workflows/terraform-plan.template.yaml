@@ -8,12 +8,12 @@ on:
         required: true
         type: string
 
-    outputs:
-      formatStatus: ${{ steps.fmt.outcome }}
-      initStatus: ${{ steps.init.outcome }}
-      validationStatus: ${{ steps.validate.outcome }}
-      planStatus: ${{ steps.plan.outcome }}
-      planDetails: ${{ steps.plan.outputs.stdout }}
+    #outputs:
+    #  formatStatus: ${{ steps.fmt.outcome }}
+    #  initStatus: ${{ steps.init.outcome }}
+    #  validationStatus: ${{ steps.validate.outcome }}
+    #  planStatus: ${{ steps.plan.outcome }}
+    #  planDetails: ${{ steps.plan.outputs.stdout }}
 
     secrets:
       key_vault_name:
