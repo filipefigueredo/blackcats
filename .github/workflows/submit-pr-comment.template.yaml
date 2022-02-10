@@ -1,0 +1,30 @@
+name: Submit comment to PR
+
+on:
+  workflow_call:
+    inputs:
+      comment_text:
+        description: Text that should be written in the comment
+        required: true
+        type: string
+
+jobs:
+  post-comment:
+    name: Post comment
+
+    runs-on: ubuntu-20.04
+
+    steps:
+      # Adds a comment to the pull request with the results of the format, init and plan steps.
+      - name: Update Pull Request
+        uses: actions/github-script@v5
+        continue-on-error: true
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: ${{ inputs.secrets_keys_list }}
+            })
