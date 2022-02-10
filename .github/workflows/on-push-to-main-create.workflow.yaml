@@ -8,7 +8,7 @@ jobs:
   # Apply Infrastructure configurations when a issue is labelled as "create".
   create-kitchen:
     name: Create kitchen resources
-    uses: ./.github/workflows/terraform-plan.template.yaml
+    uses: ./.github/workflows/terraform-create.template.yaml
     with:
       secrets_keys_list: "terraformApiToken"
     secrets:
