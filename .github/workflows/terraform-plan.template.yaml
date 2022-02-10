@@ -9,11 +9,16 @@ on:
         type: string
 
     outputs:
-      formatStatus: ${{ jobs.terraform-plan.steps.fmt.outcome }}
-      initStatus: ${{ jobs.terraform-plan.steps.init.outcome }}
-      validationStatus: ${{ jobs.terraform-plan.steps.validate.outcome }}
-      planStatus: ${{ jobs.terraform-plan.steps.plan.outcome }}
-      planDetails: ${{ jobs.terraform-plan.steps.plan.outputs.stdout }}
+      formatStatus: 
+        value: ${{ jobs.terraform-plan.steps.fmt.outcome }}
+      initStatus: 
+        value: ${{ jobs.terraform-plan.steps.init.outcome }}
+      validationStatus: 
+        value: ${{ jobs.terraform-plan.steps.validate.outcome }}
+      planStatus: 
+        value: ${{ jobs.terraform-plan.steps.plan.outcome }}
+      planDetails: 
+        value: ${{ jobs.terraform-plan.steps.plan.outputs.stdout }}
 
     secrets:
       key_vault_name:
