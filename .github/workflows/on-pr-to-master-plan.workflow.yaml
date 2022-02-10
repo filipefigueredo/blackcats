@@ -26,15 +26,15 @@ jobs:
     uses: filipefigueredo/blackcats/.github/workflows/submit-pr-comment.template.yaml@master
     with:
       comment_text: |
-        '#### Terraform Format and Style 🖌\`${{ jobs.kitchen-plan.formatStatus }}\`
-            #### Terraform Initialization ⚙️\`${{ jobs.kitchen-plan.initStatus }}\`
-            #### Terraform Validation 🤖\`${{ jobs.kitchen-plan.validationStatus }}\`
-            #### Terraform Plan 📖\`${{ jobs.kitchen-plan.planStatus }}\`
+        '#### Terraform Format and Style 🖌\`${{ needs.kitchen-plan.outputs.formatStatus }}\`
+            #### Terraform Initialization ⚙️\`${{ needs.kitchen-plan.outputs.initStatus }}\`
+            #### Terraform Validation 🤖\`${{ needs.kitchen-plan.outputs.validationStatus }}\`
+            #### Terraform Plan 📖\`${{ needs.kitchen-plan.outputs.planStatus }}\`
 
             <details><summary>Show Plan</summary>
 
             \`\`\`\n
-            ${{ jobs.kitchen-plan.planDetails }}
+            ${{ needs.kitchen-plan.outputs.planDetails }}
             \`\`\`
 
             </details>
