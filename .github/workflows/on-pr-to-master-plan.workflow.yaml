@@ -19,9 +19,10 @@ jobs:
       key_vault_credentials: ${{ secrets.AZURE_CREDENTIALS }}
       key_vault_name: ${{ secrets.AZURE_KEY_VAULT_NAME }}
     
-    # Post a comment kitchen's TF plan.
+  # Post a comment kitchen's TF plan.
   submit-plan-result:
     name: Submit TF plan
+    needs: kitchen-plan
     uses: filipefigueredo/blackcats/.github/workflows/submit-pr-comment.template.yaml@master
     with:
       comment_text: '👋 Thanks for reporting!'

@@ -2,11 +2,18 @@ name: Terraform Plan
 
 on:
   workflow_call:
-    inputs:  
+    inputs:
       secrets_keys_list:
         description: Comma separated list of secret keys that need to be fetched from the Key Vault
         required: true
         type: string
+
+    outputs:
+      formatStatus: ${{ steps.fmt.outcome }}
+      initStatus: ${{ steps.init.outcome }}
+      validationStatus: ${{ steps.validate.outcome }}
+      planStatus: ${{ steps.plan.outcome }}
+      planDetails: ${{ steps.plan.outputs.stdout }}
 
     secrets:
       key_vault_name:
@@ -37,7 +44,7 @@ jobs:
           # comma separated list of secret keys that need to be fetched from the Key Vault
           secrets: ${{ inputs.secrets_keys_list }}
         id: getSecrets
-      
+
       # Checkout repository
       - name: Checkout
         uses: actions/checkout@v2
@@ -79,8 +86,8 @@ jobs:
           script: |
             const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
             #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
-            #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
             #### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
+            #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
 
             <details><summary>Show Plan</summary>
 
