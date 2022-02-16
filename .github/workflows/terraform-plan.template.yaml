@@ -70,6 +70,7 @@ jobs:
       - name: Terraform Format
         id: fmt
         run: terraform fmt -check
+      - run: echo "::set-output name=test::world"
 
       # Initializes Terraform configurations.
       - name: Terraform Init

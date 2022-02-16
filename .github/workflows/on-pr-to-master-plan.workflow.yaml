@@ -10,9 +10,10 @@ name: Update PR with kitchen TF plan
 
 jobs:
   # Generate kitchen's TF plan.
+  
   kitchen-plan:
     name: Submit kitchen TF plan
-    uses: filipefigueredo/blackcats/.github/workflows/terraform-plan.template.yaml@master
+    uses: ./.github/workflows/terraform-plan.template.yaml@master
     with:
       secrets_keys_list: "terraformApiToken"
     secrets:
@@ -23,20 +24,20 @@ jobs:
   submit-plan-result:
     name: Submit TF plan
     needs: kitchen-plan
-    uses: filipefigueredo/blackcats/.github/workflows/submit-pr-comment.template.yaml@master
+    uses: ./.github/workflows/submit-pr-comment.template.yaml
     with:
       comment_text: |
         '#### Terraform Format and Style 🖌\`${{ needs.kitchen-plan.outputs.formatStatus }}\`
-            #### Terraform Initialization ⚙️\`${{ needs.kitchen-plan.outputs.initStatus }}\`
-            #### Terraform Validation 🤖\`${{ needs.kitchen-plan.outputs.validationStatus }}\`
-            #### Terraform Plan 📖\`${{ needs.kitchen-plan.outputs.planStatus }}\`
+         #### Terraform Initialization ⚙️\`${{ needs.kitchen-plan.outputs.initStatus }}\`
+         #### Terraform Validation 🤖\`${{ needs.kitchen-plan.outputs.validationStatus }}\`
+         #### Terraform Plan 📖\`${{ needs.kitchen-plan.outputs.planStatus }}\`
 
-            <details><summary>Show Plan</summary>
+         <details><summary>Show Plan</summary>
 
-            \`\`\`\n
-            ${{ needs.kitchen-plan.outputs.planDetails }}
-            \`\`\`
+          \`\`\`\n
+          ${{ needs.kitchen-plan.outputs.planDetails }}
+          \`\`\`
 
-            </details>
+          </details>
 
-            *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*'
+          *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*'

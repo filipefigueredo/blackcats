@@ -10,7 +10,6 @@ jobs:
   # Apply Infrastructure configurations when a issue is labelled as "create".
   create-kitchen:
     name: Create kitchen resources
-    if: github.event.label.name == 'create'
     uses: ./.github/workflows/terraform-create.template.yaml
     with:      
       secrets_keys_list: 'terraformApiToken'
