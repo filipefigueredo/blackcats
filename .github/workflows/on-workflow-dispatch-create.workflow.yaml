@@ -15,13 +15,31 @@ on:
 
 jobs:
   # Apply Infrastructure configurations when a change is pushed to default branch.
+  job1:
+  
   create-kitchen:
     name: Create kitchen resources
-    uses: ./.github/workflows/terraform-create.template.yaml
-    with:
-      secrets_keys_list: "terraformApiToken"
-      service-name: ${{ github.event.inputs.service-name }}
-      environment: ${{ github.event.inputs.environment }}
-    secrets:
-      key_vault_credentials: ${{ secrets.AZURE_CREDENTIALS }}
-      key_vault_name: ${{ secrets.AZURE_KEY_VAULT_NAME }}
+          # Azure login with SP credentials
+      - name: Azure Login
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.key_vault_credentials }}
+
+      # Retrieve secrets from Azure Key Vault
+      - name: Get secrets from KV
+        uses: Azure/get-keyvault-secrets@v1
+        with:
+          keyvault: ${{ secrets.key_vault_name }}
+          # comma separated list of secret keys that need to be fetched from the Key Vault
+          secrets: 'pipeline, dildo, terraform'
+        id: getSecrets
+
+    - uses: ./.github/workflows/terraform-create.template.yaml
+      with:
+        secrets_keys_list: step.getSecrets.output.nome_dosecret
+        service-name: ${{ github.event.inputs.service-name }}
+        environment: ${{ github.event.inputs.environment }}
+      secrets:
+        key_vault_credentials: ${{ secrets.AZURE_CREDENTIALS }}
+        key_vault_name: ${{ secrets.AZURE_KEY_VAULT_NAME }}
+      
