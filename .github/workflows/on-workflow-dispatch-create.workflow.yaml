@@ -1,45 +1,32 @@
-name: Create kitchen manually
+name: Create / destroy resources manually
 
 on:
   workflow_dispatch:
-    inputs:
-      service-name:
-        description: "Service name"
-        required: true
-        type: string
-      environment:
-        description: "Deployment environment (dev/prod)"
-        required: false
-        type: string
-        default: "dev"
+    environment:
+      description: "Deployment environment (development/production/staging)"
+      required: false
+      type: string
+      default: "development"
 
 jobs:
   # Apply Infrastructure configurations when a change is pushed to default branch.
-  job1:
-  
-  create-kitchen:
-    name: Create kitchen resources
-          # Azure login with SP credentials
-      - name: Azure Login
-        uses: Azure/login@v1
-        with:
-          creds: ${{ secrets.key_vault_credentials }}
+  create:
+    name: Create resources
+    if: ${{ github.event.inputs.action == 'create' }}
+    uses: ./.github/workflows/terraform-create.template.yaml
+    with:
+      target-directory: ${{ github.event.inputs.environment }}
+    secrets:
+      key_vault_credentials: ${{ secrets.AZURE_CREDENTIALS }}
+      key_vault_name: ${{ secrets.AZURE_KEY_VAULT_NAME }}
 
-      # Retrieve secrets from Azure Key Vault
-      - name: Get secrets from KV
-        uses: Azure/get-keyvault-secrets@v1
-        with:
-          keyvault: ${{ secrets.key_vault_name }}
-          # comma separated list of secret keys that need to be fetched from the Key Vault
-          secrets: 'pipeline, dildo, terraform'
-        id: getSecrets
-
-    - uses: ./.github/workflows/terraform-create.template.yaml
-      with:
-        secrets_keys_list: step.getSecrets.output.nome_dosecret
-        service-name: ${{ github.event.inputs.service-name }}
-        environment: ${{ github.event.inputs.environment }}
-      secrets:
-        key_vault_credentials: ${{ secrets.AZURE_CREDENTIALS }}
-        key_vault_name: ${{ secrets.AZURE_KEY_VAULT_NAME }}
-      
+  # Apply Infrastructure configurations when a change is pushed to default branch.
+  destroy:
+    name: Destroy resources
+    if: ${{ github.event.inputs.action == 'destroy' }}
+    uses: ./.github/workflows/terraform-destroy.template.yaml
+    with:
+      target-directory: ${{ github.event.inputs.environment }}
+    secrets:
+      key_vault_credentials: ${{ secrets.AZURE_CREDENTIALS }}
+      key_vault_name: ${{ secrets.AZURE_KEY_VAULT_NAME }}
