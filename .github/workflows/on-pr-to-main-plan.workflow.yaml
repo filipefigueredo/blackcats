@@ -1,10 +1,10 @@
 ###################################################################################################
 #
-# This github workflow implements integration tests which  validate that a newly introduced code 
-# change doesn't break existing code. Whenever the code base is changed this workflow  will be 
+# This github workflow implements integration tests which  validate that a newly introduced code
+# change doesn't break existing code. Whenever the code base is changed this workflow  will be
 # triggered
 #
-# Here are common examples of integration tests covered by this 
+# Here are common examples of integration tests covered by this
 # workflow:
 #    - Static code analysis tools such as lint and format.
 #    - Run terraform validate to verify the syntax of the configuration file.
@@ -12,17 +12,15 @@
 #
 ###################################################################################################
 name: Code validation - development
-
 on:
   pull_request:
     types: [opened, synchronize, reopened]
-    branches: [main]
+    branches: [master]
     paths:
-      - 'development/**'
+      - "development/**"
 
 jobs:
-  # Generate kitchen's TF plan.
-  
+  # Code linting checking, validation and resources plan
   code-validation:
     name: Validates resources code
     #uses: nmbrs/demo-gh-reusable-workflows/.github/workflows/terraform-fmt-validate-plan.template.yaml@master
@@ -32,7 +30,7 @@ jobs:
     secrets:
       key_vault_credentials: ${{ secrets.AZURE_CREDENTIALS }}
       key_vault_name: ${{ secrets.AZURE_KEY_VAULT_NAME }}
-    
+
   # Post a comment kitchen's TF plan.
   #post-pr-comment:
   #  name: Submit TF plan
