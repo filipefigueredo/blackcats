@@ -2,10 +2,10 @@ name: Create kitchen
 
 on:
   push:
-    branches: [master]
+    branches: [main]
     paths:
-      - 'development/**'
-    
+      - "development/**"
+
 jobs:
   # Apply Infrastructure configurations when action=='create'.
   create:
