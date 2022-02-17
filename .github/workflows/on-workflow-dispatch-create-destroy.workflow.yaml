@@ -50,7 +50,7 @@ jobs:
   create:
     name: Create resources
     if: ${{ github.event.inputs.action == 'create' }}
-    uses: nmbrs/demo-gh-reusable-workflows/.github/workflows/submit-pr-comment.template.yaml@main
+    uses: nmbrs/demo-gh-reusable-workflows/.github/workflows/terraform-create.template.yaml@main
     with:
       target-directory: ${{ github.event.inputs.environment }}
     secrets:
