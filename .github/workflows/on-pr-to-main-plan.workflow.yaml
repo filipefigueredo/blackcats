@@ -27,7 +27,8 @@ jobs:
   code-validation:
     name: Code validation
     if: ${{ github.event.inputs.action == 'create' }}
-    uses: nmbrs/demo-gh-reusable-workflows/.github/workflows/terraform-create.template.yaml@main
+    #uses: nmbrs/demo-gh-reusable-workflows/.github/workflows/terraform-fmt-validate-plan.template.yaml@main
+    uses: ./.github/workflows/terraform-fmt-validate-plan.template.yaml
     with:
       target-directory: development
     secrets:
