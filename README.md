@@ -8,9 +8,9 @@
 
 > Repository for demonstrate terraform 
 
-## Workflow
+## Workflows overview
 
-![Screen Shot 2022-02-04 at 12 02 14 PM](https://user-images.githubusercontent.com/904062/152518191-53298495-8928-4a41-8bbf-0b4325cbdb35.png)
+![Worflows overview](https://user-images.githubusercontent.com/42495290/154413846-d62759ce-f2fe-44dc-bb82-5efde8d32723.jpg)
 
 
 ## Running / testing configuration files locally
