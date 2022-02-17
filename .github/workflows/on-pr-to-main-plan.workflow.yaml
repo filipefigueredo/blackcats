@@ -26,7 +26,6 @@ jobs:
   # Code linting checking, validation and resources plan
   code-validation:
     name: Code validation
-    if: ${{ github.event.inputs.action == 'create' }}
     #uses: nmbrs/demo-gh-reusable-workflows/.github/workflows/terraform-fmt-validate-plan.template.yaml@main
     uses: ./.github/workflows/terraform-fmt-validate-plan.template.yaml
     with:
