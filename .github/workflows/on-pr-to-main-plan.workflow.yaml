@@ -13,43 +13,46 @@
 ###################################################################################################
 #name: Code validation - development environment
 
-on:
+name: Code validation - development environment
+
+on:  
   pull_request:
     types: [opened, synchronize, reopened]
-    branches: [master]
+    branches: [ main ]
     paths:
-      - "development/**"
-
+      - 'development/**'
+  
 jobs:
-  # Code linting checking, validation and resources plan  
+  # Code linting checking, validation and resources plan
   code-validation:
-    name: Validates resources code
-    #uses: nmbrs/demo-gh-reusable-workflows/.github/workflows/terraform-fmt-validate-plan.template.yaml@master
-    uses: ./.github/workflows/terraform-fmt-validate-plan.template.yaml    
+    name: Code validation
+    if: ${{ github.event.inputs.action == 'create' }}
+    #uses: nmbrs/demo-gh-reusable-workflows/.github/workflows/terraform-fmt-validate-plan.template.yaml@main
+    uses: ./.github/workflows/terraform-fmt-validate-plan.template.yaml
     with:
       target-directory: development
     secrets:
       key_vault_credentials: ${{ secrets.AZURE_CREDENTIALS }}
       key_vault_name: ${{ secrets.AZURE_KEY_VAULT_NAME }}
 
-  # Post a comment kitchen's TF plan.
-  #post-pr-comment:
-  #  name: Submit TF plan
-  #  needs: resource-plan
-  #  uses: nmbrs/demo-gh-reusable-workflows/.github/workflows/submit-pr-comment.template.yaml@yaml
-  #  with:
-  #    comment_text: |
-  #      '#### Terraform Format and Style 🖌\`${{ needs.kitchen-plan.outputs.formatStatus }}\`
-  #       #### Terraform Initialization ⚙️\`${{ needs.kitchen-plan.outputs.initStatus }}\`
-  #       #### Terraform Validation 🤖\`${{ needs.kitchen-plan.outputs.validationStatus }}\`
-  #       #### Terraform Plan 📖\`${{ needs.kitchen-plan.outputs.planStatus }}\`
-  #
-  #      <details><summary>Show Plan</summary>
+# Post a comment kitchen's TF plan.
+#post-pr-comment:
+#  name: Submit TF plan
+#  needs: resource-plan
+#  uses: nmbrs/demo-gh-reusable-workflows/.github/workflows/submit-pr-comment.template.yaml@yaml
+#  with:
+#    comment_text: |
+#      '#### Terraform Format and Style 🖌\`${{ needs.kitchen-plan.outputs.formatStatus }}\`
+#       #### Terraform Initialization ⚙️\`${{ needs.kitchen-plan.outputs.initStatus }}\`
+#       #### Terraform Validation 🤖\`${{ needs.kitchen-plan.outputs.validationStatus }}\`
+#       #### Terraform Plan 📖\`${{ needs.kitchen-plan.outputs.planStatus }}\`
+#
+#      <details><summary>Show Plan</summary>
 
-  #        \`\`\`\n
-  #        ${{ needs.kitchen-plan.outputs.planDetails }}
-  #        \`\`\`
+#        \`\`\`\n
+#        ${{ needs.kitchen-plan.outputs.planDetails }}
+#        \`\`\`
 
-  #        </details>
+#        </details>
 
-  #        *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*'
+#        *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*'
