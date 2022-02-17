@@ -17,6 +17,8 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
     branches: [main]
+    paths:
+      - 'development/**'
 
 jobs:
   # Generate kitchen's TF plan.
@@ -26,7 +28,7 @@ jobs:
     #uses: nmbrs/demo-gh-reusable-workflows/.github/workflows/terraform-fmt-validate-plan.template.yaml@master
     uses: ./.github/workflows/terraform-fmt-validate-plan.template.yaml
     with:
-      target-directory: ${{ github.event.inputs.environment }}
+      target-directory: development
     secrets:
       key_vault_credentials: ${{ secrets.AZURE_CREDENTIALS }}
       key_vault_name: ${{ secrets.AZURE_KEY_VAULT_NAME }}
