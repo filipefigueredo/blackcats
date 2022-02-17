@@ -3,14 +3,16 @@ name: Create kitchen
 on:
   push:
     branches: [master]
-    
+    paths:
+      - "production/**"
+
 jobs:
-  # Apply Infrastructure configurations when a issue is labelled as "create".
-  create-kitchen:
-    name: Create kitchen resources
-    uses: ./.github/workflows/terraform-create.template.yaml
+  # Apply Infrastructure configurations when action=='create'.
+  create:
+    name: Create resources
+    uses: nmbrs/demo-gh-reusable-workflows/.github/workflows/terraform-create.template.yaml@main
     with:
-      secrets_keys_list: "terraformApiToken"
+      target-directory: production
     secrets:
       key_vault_credentials: ${{ secrets.AZURE_CREDENTIALS }}
       key_vault_name: ${{ secrets.AZURE_KEY_VAULT_NAME }}
