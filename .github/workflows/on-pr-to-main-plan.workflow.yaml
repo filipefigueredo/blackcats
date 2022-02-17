@@ -13,7 +13,7 @@
 ###################################################################################################
 #name: Code validation - development environment
 
-name: kitchen-infra
+name: Code validation - development environment
 
 on:  
   pull_request:
