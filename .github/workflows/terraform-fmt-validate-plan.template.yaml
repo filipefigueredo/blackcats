@@ -4,35 +4,10 @@ on:
   workflow_call:
     inputs:
       target-directory:
-        description: "Deployment environment (development/production/staging)"
+        description: "Target working directory (development/production/staging)"
         required: false
         type: string
         default: "development"
-
-    secrets:
-      key_vault_name:
-        description: Key Vault name
-        required: true
-      key_vault_credentials:
-        description: Azure credentials to access Key Vault
-        required: true
-
-    outputs:
-      formatStatus:
-        description: "Format status"
-        value: ${{ jobs.terraform-validate-fmt-plan.steps.fmt.outcome }}
-      initStatus:
-        description: "Init status"
-        value: ${{ jobs.terraform-validate-fmt-plan.steps.init.outcome }}
-      validationStatus:
-        description: "Validation status"
-        value: ${{ jobs.terraform-validate-fmt-plan.steps.validate.outcome }}
-      planStatus:
-        description: "Plan status"
-        value: ${{ jobs.terraform-validate-fmt-plan.steps.plan.outcome }}
-      planDetails:
-        description: "Plan details"
-        value: ${{ jobs.terraform-validate-fmt-plan.steps.plan.outputs.stdout }}
 
     secrets:
       key_vault_name:
