@@ -26,32 +26,11 @@ jobs:
   # Code linting checking, validation and resources plan
   code-validation:
     name: Code validation
-    #uses: nmbrs/demo-gh-reusable-workflows/.github/workflows/terraform-fmt-validate-plan.template.yaml@main
-    uses: ./.github/workflows/terraform-fmt-validate-plan.template.yaml
+    uses: nmbrs/demo-gh-reusable-workflows/.github/workflows/terraform-fmt-validate-plan.template.yaml@main
     with:
       target-directory: development
     secrets:
       key_vault_credentials: ${{ secrets.AZURE_CREDENTIALS }}
       key_vault_name: ${{ secrets.AZURE_KEY_VAULT_NAME }}
 
-# Post a comment kitchen's TF plan.
-#post-pr-comment:
-#  name: Submit TF plan
-#  needs: resource-plan
-#  uses: nmbrs/demo-gh-reusable-workflows/.github/workflows/submit-pr-comment.template.yaml@yaml
-#  with:
-#    comment_text: |
-#      '#### Terraform Format and Style 🖌\`${{ needs.kitchen-plan.outputs.formatStatus }}\`
-#       #### Terraform Initialization ⚙️\`${{ needs.kitchen-plan.outputs.initStatus }}\`
-#       #### Terraform Validation 🤖\`${{ needs.kitchen-plan.outputs.validationStatus }}\`
-#       #### Terraform Plan 📖\`${{ needs.kitchen-plan.outputs.planStatus }}\`
-#
-#      <details><summary>Show Plan</summary>
 
-#        \`\`\`\n
-#        ${{ needs.kitchen-plan.outputs.planDetails }}
-#        \`\`\`
-
-#        </details>
-
-#        *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*'
