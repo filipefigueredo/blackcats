@@ -1,4 +1,5 @@
 ###################################################################################################
+#
 # This github workflow allows to create / destroy infrastructure resources by
 # responding to an "workflow_dispatch" event.
 #

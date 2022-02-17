@@ -1,0 +1,136 @@
+name: Terraform Validation
+
+on:
+  workflow_call:
+    inputs:
+      target-directory:
+        description: "Deployment environment (development/production/staging)"
+        required: false
+        type: string
+        default: "development"
+
+    secrets:
+      key_vault_name:
+        description: Key Vault name
+        required: true
+      key_vault_credentials:
+        description: Azure credentials to access Key Vault
+        required: true
+
+    outputs:
+      formatStatus:
+        description: "Format status"
+        value: ${{ jobs.terraform-validate-fmt-plan.steps.fmt.outcome }}
+      initStatus:
+        description: "Init status"
+        value: ${{ jobs.terraform-validate-fmt-plan.steps.init.outcome }}
+      validationStatus:
+        description: "Validation status"
+        value: ${{ jobs.terraform-validate-fmt-plan.steps.validate.outcome }}
+      planStatus:
+        description: "Plan status"
+        value: ${{ jobs.terraform-validate-fmt-plan.steps.plan.outcome }}
+      planDetails:
+        description: "Plan details"
+        value: ${{ jobs.terraform-validate-fmt-plan.steps.plan.outputs.stdout }}
+
+    secrets:
+      key_vault_name:
+        description: Key Vault name
+        required: true
+      key_vault_credentials:
+        description: Azure credentials to access Key Vault
+        required: true
+
+jobs:
+  terraform-validate-fmt-plan:
+    name: Create TF plan
+
+    runs-on: ubuntu-20.04
+
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./${{ inputs.target-directory }}
+
+    steps:
+      # Azure login with SP credentials
+      - name: Azure Login
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.key_vault_credentials }}
+
+      # Retrieve secrets from Azure Key Vault
+      - name: Get secrets from KV
+        uses: Azure/get-keyvault-secrets@v1
+        with:
+          keyvault: ${{ secrets.key_vault_name }}
+          # comma separated list of secret keys that need to be fetched from the Key Vault
+          secrets: terraformApiToken
+        id: getSecrets
+
+      # Checkout repository
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # Retrieves the Terraform CLI used in the GitHub action workflow
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          cli_config_credentials_token: ${{ steps.getSecrets.outputs.terraformApiToken }}
+
+      # Checks whether the repository has been properly formatted.
+      # If it isn't properly formatted this step will produce an error.
+      - name: Terraform Format
+        id: fmt
+        run: terraform fmt -check
+
+      # Initializes Terraform configurations.
+      - name: Terraform Init
+        id: init
+        run: terraform init
+
+      # Validates Terraform configurations.
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
+
+      # Generates a Terraform plan.
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -input=false -no-color
+        continue-on-error: true
+
+      # Adds a comment to the pull request with the results of the format, init and plan steps.
+      - name: Update Pull Request
+        uses: actions/github-script@v5
+        continue-on-error: true
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const output = `#### Terraform Format and Style 🖌\`${{ needs.kitchen-plan.outputs.formatStatus }}\`
+            #### Terraform Initialization ⚙️\`${{ needs.kitchen-plan.outputs.initStatus }}\`
+            #### Terraform Validation 🤖\`${{ needs.kitchen-plan.outputs.validationStatus }}\`
+            #### Terraform Plan 📖\`${{ needs.kitchen-plan.outputs.planStatus }}\`
+
+            <details><summary>Show Plan</summary>
+
+            \`\`\`\n
+            ${{ needs.kitchen-plan.outputs.planDetails }}
+            \`\`\`
+
+            </details>
+
+            *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            })
+
+      # Returns whether a plan was successfully generated or not.
+      - name: Terraform Plan Status
+        if: steps.plan.outcome == 'failure'
+        run: exit 1
