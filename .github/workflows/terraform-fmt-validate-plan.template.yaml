@@ -83,19 +83,15 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const output = `#### Terraform Format and Style 🖌\`${{ needs.kitchen-plan.outputs.formatStatus }}\`
-            #### Terraform Initialization ⚙️\`${{ needs.kitchen-plan.outputs.initStatus }}\`
-            #### Terraform Validation 🤖\`${{ needs.kitchen-plan.outputs.validationStatus }}\`
-            #### Terraform Plan 📖\`${{ needs.kitchen-plan.outputs.planStatus }}\`
-
+            const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
+            #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
+            #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
+            #### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
             <details><summary>Show Plan</summary>
-
             \`\`\`\n
-            ${{ needs.kitchen-plan.outputs.planDetails }}
+            ${process.env.PLAN}
             \`\`\`
-
             </details>
-
             *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
 
             github.rest.issues.createComment({
