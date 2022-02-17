@@ -27,13 +27,17 @@ on:
   workflow_dispatch:
     inputs:
       action:
-        description: "Terraform action (create/destroy)"
+        description: "Terraform action"
         required: true
+        type: choice
+        options:
+          - "create"
+          - "destroy"
         default: "create"
-        inputs:
+        
       environment:
-        description: "Deployment environment (development/production/staging)"
-        required: false
+        description: "Deployment environment"
+        required: true
         type: choice
         options:
           - "development"
