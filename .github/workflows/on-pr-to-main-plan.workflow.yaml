@@ -35,21 +35,6 @@ jobs:
       key_vault_credentials: ${{ secrets.AZURE_CREDENTIALS }}
       key_vault_name: ${{ secrets.AZURE_KEY_VAULT_NAME }}
 
-
-#jobs:
-# Code linting checking, validation and resources plan
-#  code-validation:
-#    name: Validates resources code
-#    steps:
-#      - uses: actions/checkout@v2
-#uses: nmbrs/demo-gh-reusable-workflows/.github/workflows/terraform-fmt-validate-plan.template.yaml@master
-#uses: ./.github/workflows/terraform-fmt-validate-plan.template.yaml
-#with:
-#  target-directory: development
-#secrets:
-#  key_vault_credentials: ${{ secrets.AZURE_CREDENTIALS }}
-#  key_vault_name: ${{ secrets.AZURE_KEY_VAULT_NAME }}
-
 # Post a comment kitchen's TF plan.
 #post-pr-comment:
 #  name: Submit TF plan
