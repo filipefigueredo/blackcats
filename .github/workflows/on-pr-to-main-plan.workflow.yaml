@@ -17,6 +17,7 @@ name: Code validation - development environment
 
 on:  
   pull_request:
+    types: [opened, synchronize, reopened]
     branches: [ main ]
     paths:
       - 'development/**'
