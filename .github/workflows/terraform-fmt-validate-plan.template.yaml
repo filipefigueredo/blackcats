@@ -78,7 +78,7 @@ jobs:
 
       # Adds a comment to the pull request with the results of the format, init and plan steps.
       - name: Update Pull Request
-        uses: actions/github-script@v5
+        uses: actions/github-script@0.9.0
         continue-on-error: true
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -94,7 +94,7 @@ jobs:
             </details>
             *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
 
-            github.rest.issues.createComment({
+            github.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
