@@ -23,6 +23,11 @@ jobs:
 
     runs-on: ubuntu-20.04
 
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./${{ inputs.target-directory }}
+
     steps:
       # Azure login with SP credentials
       - name: Azure Login
