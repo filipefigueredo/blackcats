@@ -14,13 +14,13 @@
 
 name: Code validation - staging environment
 
-on:  
+on:
   pull_request:
     types: [opened, synchronize, reopened]
-    branches: [ main ]
+    branches: [main]
     paths:
-      - 'staging/**'
-  
+      - "staging/**"
+
 jobs:
   # Code linting checking, validation and resources plan
   code-validation:
@@ -31,11 +31,10 @@ jobs:
     secrets:
       key_vault_credentials: ${{ secrets.AZURE_CREDENTIALS }}
       key_vault_name: ${{ secrets.AZURE_KEY_VAULT_NAME }}
- 
+
   # Static code analysis  scanning for security / compliance  issues
   security-compliance-analysis:
     name: Security / compliance static analysis
     uses: nmbrs/demo-gh-reusable-workflows/.github/workflows/terraform-checkov.template.yaml@main
     with:
-      target-directory: development
-
+      target-directory: staging

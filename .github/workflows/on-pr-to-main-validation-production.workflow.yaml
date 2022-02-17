@@ -37,7 +37,7 @@ jobs:
     name: Security / compliance static analysis
     uses: nmbrs/demo-gh-reusable-workflows/.github/workflows/terraform-checkov.template.yaml@main
     with:
-      target-directory: development
+      target-directory: production
 
 
 
