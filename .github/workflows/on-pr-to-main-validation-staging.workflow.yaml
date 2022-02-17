@@ -12,7 +12,7 @@
 #
 ###################################################################################################
 
-name: Code validation - staging environment
+name: Code Validation (staging)
 
 on:
   pull_request:

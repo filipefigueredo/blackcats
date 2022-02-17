@@ -12,7 +12,7 @@
 #
 ###################################################################################################
 
-name: Code validation - production environment
+name: Code Validation (production)
 
 on:  
   pull_request:

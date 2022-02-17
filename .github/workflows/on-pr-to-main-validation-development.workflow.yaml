@@ -12,7 +12,7 @@
 #
 ###################################################################################################
 
-name: Code validation - development environment
+name: Code Validation (development)
 
 on:
   pull_request:
