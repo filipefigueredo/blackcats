@@ -1,23 +1,23 @@
-###################################################################################################                                                                
-# This github workflow allows to create / destroy infrastructure resources by 
+###################################################################################################
+# This github workflow allows to create / destroy infrastructure resources by
 # responding to an "workflow_dispatch" event.
 #
 # This events can be triggered by a bot, pipelines hooks, platform integrations or even through
 # github actions UI.
 #
-# If the event was triggered using the input "action" with the value "create", the workflow will 
-# create infrastructure resources managed by terraform. Here are use cases: 
+# If the event was triggered using the input "action" with the value "create", the workflow will
+# create infrastructure resources managed by terraform. Here are use cases:
 #   - A slack bot invokes this workflow after a schedule deletion of development environment.
-#   - A code pipeline invokes this workflow to ensure that the infrastructure is in place 
+#   - A code pipeline invokes this workflow to ensure that the infrastructure is in place
 #        before triggering a code deployment (it can useful specially in disaster recoveries)
 #   - Ansible invokes this workflow to recreate the infrastructure that it already destroyed.
 #
 #
-# If the event was triggered using the input "action" with the value "destroy", the workflow will 
-# destroy infrastructure resources managed by terraform. Here are use cases: 
+# If the event was triggered using the input "action" with the value "destroy", the workflow will
+# destroy infrastructure resources managed by terraform. Here are use cases:
 #   - A slack bot invokes this workflow after to destroy of development environment because the
 #        environment broke during the development process.
-#   - Ansible invokes this workflow to destroy the infrastructure before recreate it because 
+#   - Ansible invokes this workflow to destroy the infrastructure before recreate it because
 #        something was wrong with the desired environment.
 #
 ###################################################################################################
@@ -25,17 +25,21 @@ name: Create / destroy resources by dispatch
 
 on:
   workflow_dispatch:
-  inputs:
-    action:
-      description: "Terraform action (create/destroy)"
-      required: true
-      default: "create"
-      inputs:
-    environment:
-      description: "Deployment environment (development/production/staging)"
-      required: false
-      type: string
-      default: "development"
+    inputs:
+      action:
+        description: "Terraform action (create/destroy)"
+        required: true
+        default: "create"
+        inputs:
+      environment:
+        description: "Deployment environment (development/production/staging)"
+        required: false
+        type: choice
+        options:
+          - "development"
+          - "production"
+          - "staging"
+        default: "development"
 
 jobs:
   # Apply Infrastructure configurations when a change is pushed to default branch.
