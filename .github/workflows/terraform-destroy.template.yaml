@@ -3,10 +3,6 @@ name: Terraform destroy
 on:
   workflow_call:
     inputs:
-      secrets_keys_list:
-        description: Comma separated list of secret keys that need to be fetched from the Key Vault
-        required: true
-        type: string
       target-directory:
         description: "Target working directory (development/production/staging)"
         required: false
