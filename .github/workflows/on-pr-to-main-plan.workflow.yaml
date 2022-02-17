@@ -23,9 +23,9 @@ on:
       - 'development/**'
   
 jobs:
-  # Apply Infrastructure configurations when action=='create'.
-  create:
-    name: Create resources
+  # Code linting checking, validation and resources plan
+  code-validation:
+    name: Code validation
     if: ${{ github.event.inputs.action == 'create' }}
     uses: nmbrs/demo-gh-reusable-workflows/.github/workflows/terraform-create.template.yaml@main
     with:
@@ -34,15 +34,6 @@ jobs:
       key_vault_credentials: ${{ secrets.AZURE_CREDENTIALS }}
       key_vault_name: ${{ secrets.AZURE_KEY_VAULT_NAME }}
 
-
-
-
-#on:
-#  pull_request:
-#    types: [opened, synchronize, reopened]
-#    branches: [master]
-#    paths:
-#      - "development/**"
 
 #jobs:
 # Code linting checking, validation and resources plan
