@@ -25,8 +25,7 @@ jobs:
   code-validation:
     name: Validates resources code
     #uses: nmbrs/demo-gh-reusable-workflows/.github/workflows/terraform-fmt-validate-plan.template.yaml@master
-    #uses: ./.github/workflows/terraform-fmt-validate-plan.template.yaml
-    - run: echo "exit"
+    uses: ./.github/workflows/terraform-fmt-validate-plan.template.yaml    
     #with:
       #target-directory: development
     #secrets:
