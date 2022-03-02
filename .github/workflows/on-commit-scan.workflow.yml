@@ -24,7 +24,8 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload SARIF file
-        uses: github/codeql-action/upload-sarif@v1
+      - name: Upload output file
+        uses: actions/upload-artifact@v2
         with:
-          # Path to SARIF file relative to the root of the repository
-          sarif_file: tfsec.sarif
+          name: sarif-file
+          path: tfsec.sarif
