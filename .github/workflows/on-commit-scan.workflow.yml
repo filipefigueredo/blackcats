@@ -22,7 +22,10 @@ jobs:
         with:
           tfsec_args: --format=sarif --out=./tfsec.sarif
           github_token: ${{ secrets.GITHUB_TOKEN }}
-
+      - name: pwd
+        run: pwd
+      - name: ls
+        run: ls -al
       - name: Upload SARIF file
         uses: actions/upload-artifact@v2
         with:
