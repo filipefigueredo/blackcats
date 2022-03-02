@@ -20,7 +20,7 @@ jobs:
       - name: tfsec
         uses: tfsec/tfsec-pr-commenter-action@main
         with:
-          tfsec_args: --format sarif --out tfsec.sarif
+          tfsec_args: --format=sarif --out=tfsec.sarif
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload SARIF file
