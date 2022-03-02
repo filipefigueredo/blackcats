@@ -1,0 +1,30 @@
+name: Scan Terraform for Vulnerabilities
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize]
+
+  push:
+    branches:
+      - "main"
+
+jobs:
+  tfsec-scan:
+    name: Tfsec Scan
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: tfsec
+        uses: tfsec/tfsec-pr-commenter-action@main
+        with:
+          tfsec_args: --format sarif --out tfsec.sarif
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload SARIF file
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          # Path to SARIF file relative to the root of the repository
+          sarif_file: tfsec.sarif
