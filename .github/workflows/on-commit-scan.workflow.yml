@@ -16,11 +16,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
 
-      - name: tfsec
+      - name: tfsec-comment
         uses: tfsec/tfsec-pr-commenter-action@main
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -35,7 +32,7 @@ jobs:
         with:
           # Path to SARIF file relative to the root of the repository
           sarif_file: tfsec.sarif
-          
+
       - name: pwd
         run: pwd
       - name: ls
