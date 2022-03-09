@@ -4,8 +4,8 @@ environment = "production"
 tags = {
   country : "FilipeLand"
   squad : "infra"
-  product : "kitchen-squad-infra"
-  environment : "production"
+  product : "test-product"
+  environment : "development"
 }
 
 kitchen_name = "demo-tf-multirepo-bdd"
