@@ -1,32 +1,32 @@
-name: Create / destroy resources by schedule
+#name: Create / destroy resources by schedule
 
-on:
-  schedule:
-    # Triggers At 06:00 on every day-of-week from Monday through Friday
-    - cron:  '0 6 * * 1-5'
-    # Triggers every day at 19:00
-    - cron:  '0 19 * * *'
+#on:
+#  schedule:
+#    # Triggers At 06:00 on every day-of-week from Monday through Friday
+#    - cron:  '0 6 * * 1-5'
+#    # Triggers every day at 19:00
+#    - cron:  '0 19 * * *'
 
 
-jobs:
-  # Apply Infrastructure resources when the specified schedule event triggers.
-  create:
-    name: Create resources
-    if: ${{ github.event.schedule != '0 6 * * 1-5' }}
-    uses: ./.github/workflows/terraform-create.template.yaml
-    with:
-      target-directory: ${{ github.event.inputs.environment }}
-    secrets:
-      key_vault_credentials: ${{ secrets.AZURE_CREDENTIALS }}
-      key_vault_name: ${{ secrets.AZURE_KEY_VAULT_NAME }}
+#jobs:
+#  # Apply Infrastructure resources when the specified schedule event triggers.
+#  create:
+#    name: Create resources
+#    if: ${{ github.event.schedule != '0 6 * * 1-5' }}
+#    uses: ./.github/workflows/terraform-create.template.yaml
+#    with:
+#      target-directory: ${{ github.event.inputs.environment }}
+#    secrets:
+#      key_vault_credentials: ${{ secrets.AZURE_CREDENTIALS }}
+#      key_vault_name: ${{ secrets.AZURE_KEY_VAULT_NAME }}
 
-  # Destroy Infrastructure resources when the specified schedule event triggers.
-  destroy:
-    name: Destroy resources
-    if: ${{ github.event.schedule != '0 19 * * *' }}
-    uses: ./.github/workflows/terraform-destroy.template.yaml
-    with:
-      target-directory: ${{ github.event.inputs.environment }}
-    secrets:
-      key_vault_credentials: ${{ secrets.AZURE_CREDENTIALS }}
-      key_vault_name: ${{ secrets.AZURE_KEY_VAULT_NAME }}
+#  # Destroy Infrastructure resources when the specified schedule event triggers.
+#  destroy:
+#    name: Destroy resources
+#    if: ${{ github.event.schedule != '0 19 * * *' }}
+#    uses: ./.github/workflows/terraform-destroy.template.yaml
+#    with:
+#      target-directory: ${{ github.event.inputs.environment }}
+#    secrets:
+#      key_vault_credentials: ${{ secrets.AZURE_CREDENTIALS }}
+#      key_vault_name: ${{ secrets.AZURE_KEY_VAULT_NAME }}
