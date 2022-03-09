@@ -12,16 +12,16 @@
 #
 ###################################################################################################
 
-name: Code Validation (development)
+#name: Code Validation (development)
 
-on:
-  pull_request:
-    types: [opened, synchronize, reopened]
-    branches: [main]
-    paths:
-      - "development/**"
+#on:
+#  pull_request:
+#    types: [opened, synchronize, reopened]
+#    branches: [main]
+#    paths:
+#      - "development/**"
 
-jobs:
+#jobs:
   # Code linting checking, validation and resources plan
   code-validation:
     name: Code validation

@@ -51,20 +51,24 @@ jobs:
   create:
     name: Create resources
     if: ${{ github.event.inputs.action == 'create' }}
-    uses: nmbrs/demo-gh-reusable-workflows/.github/workflows/terraform-create.template.yaml@main
-    with:
-      target-directory: ${{ github.event.inputs.environment }}
-    secrets:
-      key_vault_credentials: ${{ secrets.AZURE_CREDENTIALS }}
-      key_vault_name: ${{ secrets.AZURE_KEY_VAULT_NAME }}
+    steps:
+      - run : echo create
+    #uses: .github/workflows/terraform-create.template.yaml@main
+    #with:
+    #  target-directory: ${{ github.event.inputs.environment }}
+    #secrets:
+    #  key_vault_credentials: ${{ secrets.AZURE_CREDENTIALS }}
+    #  key_vault_name: ${{ secrets.AZURE_KEY_VAULT_NAME }}
 
   # Destroy Infrastructure configurations when action=='destroy'.
   destroy:
     name: Destroy resources
     if: ${{ github.event.inputs.action == 'destroy' }}
-    uses: nmbrs/demo-gh-reusable-workflows/.github/workflows/terraform-destroy.template.yaml@main
-    with:
-      target-directory: ${{ github.event.inputs.environment }}
-    secrets:
-      key_vault_credentials: ${{ secrets.AZURE_CREDENTIALS }}
-      key_vault_name: ${{ secrets.AZURE_KEY_VAULT_NAME }}
+    steps:
+      - run : echo destroy
+    #uses: nmbrs/demo-gh-reusable-workflows/.github/workflows/terraform-destroy.template.yaml@main
+    #with:
+    #  target-directory: ${{ github.event.inputs.environment }}
+    #secrets:
+    #  key_vault_credentials: ${{ secrets.AZURE_CREDENTIALS }}
+    #  key_vault_name: ${{ secrets.AZURE_KEY_VAULT_NAME }}
