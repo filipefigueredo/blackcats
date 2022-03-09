@@ -51,6 +51,7 @@ jobs:
   create:
     name: Create resources
     if: ${{ github.event.inputs.action == 'create' }}
+    runs-on: ubuntu-latest
     steps:
       - run : echo create
     #uses: .github/workflows/terraform-create.template.yaml@main
@@ -64,6 +65,7 @@ jobs:
   destroy:
     name: Destroy resources
     if: ${{ github.event.inputs.action == 'destroy' }}
+    runs-on: ubuntu-latest
     steps:
       - run : echo destroy
     #uses: nmbrs/demo-gh-reusable-workflows/.github/workflows/terraform-destroy.template.yaml@main
