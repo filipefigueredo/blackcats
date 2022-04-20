@@ -5,6 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0](https://github.com/filipefigueredo/blackcats/compare/v0.1.0...v1.0.0) (2022-04-20)
+
+
+### ⚠ BREAKING CHANGES
+
+* **docs:** remove j.md
+* **docs:** remove x.md
+* **docs:** update doc with breaking change with scope
+* **docs:** update doc with breaking change
+* update doc with breaking change
+
+### Features
+
+* **docs:** remove j.md ([ba5e0dd](https://github.com/filipefigueredo/blackcats/commit/ba5e0dd71f52ee0b9eee15ace58979220a7e69fe))
+* **docs:** remove x.md ([de8ebfa](https://github.com/filipefigueredo/blackcats/commit/de8ebfa97e6ac7709e32706a7676a8a05894ca31))
+* **docs:** update doc with breaking change ([a2a8fc6](https://github.com/filipefigueredo/blackcats/commit/a2a8fc6233c2f5c4ae0754f0ec5e0c194e0886e5))
+* **docs:** update doc with breaking change with scope ([60551bb](https://github.com/filipefigueredo/blackcats/commit/60551bb3456651db17e38bb5c794d8ded27f0443))
+* **docs:** update doc without breaking change ([7674328](https://github.com/filipefigueredo/blackcats/commit/7674328b807e81d4f1e792b2201b1355990123d5))
+* update doc with breaking change ([0a7cadf](https://github.com/filipefigueredo/blackcats/commit/0a7cadf4baf81dddc53e114b385c60475eebb71a))
+
 ## 0.1.0 (2022-04-20)
 
 
