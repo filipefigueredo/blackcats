@@ -1,12 +1,20 @@
+name: code base release
+
 on:
   push:
     branches:
       - main
-name: release-please
+
 jobs:
   release-please:
-    runs-on: ubuntu-latest
+    name: release please
+    runs-on: ubuntu-20.04
+
+    defaults:
+      run:
+        shell: bash
+
     steps:
       - uses: google-github-actions/release-please-action@v3
         with:
-          release-type: terraform-module
+          release-type: simple
