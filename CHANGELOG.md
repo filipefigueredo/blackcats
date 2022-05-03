@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.1.0](https://github.com/filipefigueredo/blackcats/compare/v3.0.0...v3.1.0) (2022-05-03)
+
+
+### Features
+
+* **docs:** update j.md ([d244b5d](https://github.com/filipefigueredo/blackcats/commit/d244b5d668b5a6d53026efd6690e082f9aca09e0))
+* **github:** bump release please version ([175ef10](https://github.com/filipefigueredo/blackcats/commit/175ef1031b5ae92f4e9802a564c2207e5ca7df6c))
+* **release-please:** add codebase release action ([cecb562](https://github.com/filipefigueredo/blackcats/commit/cecb5625d15915d9f8aafb29ace2e26dc8aa6c06))
+
 ## [3.0.0](https://github.com/filipefigueredo/blackcats/compare/v2.0.0...v3.0.0) (2022-04-27)
 
 
