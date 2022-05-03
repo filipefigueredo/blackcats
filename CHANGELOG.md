@@ -5,6 +5,35 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.0](https://github.com/filipefigueredo/blackcats/compare/v2.0.0...v3.0.0) (2022-04-27)
+
+
+### ⚠ BREAKING CHANGES
+
+* breaking change
+
+### Features
+
+* breaking change ([196cea3](https://github.com/filipefigueredo/blackcats/commit/196cea35814f4424400778ca506956c606a4178e))
+
+## [2.0.0](https://github.com/filipefigueredo/blackcats/compare/v1.0.0...v2.0.0) (2022-04-27)
+
+
+### ⚠ BREAKING CHANGES
+
+* **terraform:** add j.md
+
+### Features
+
+* **terraform:** add j.md ([df84324](https://github.com/filipefigueredo/blackcats/commit/df843247998cfc349163d548ff0416841c4a2e9d))
+* update j.md for release purposes ([6cbde7d](https://github.com/filipefigueredo/blackcats/commit/6cbde7d46bb15093871ad3667a7fd8e3f0df11a7))
+
+
+### Bug Fixes
+
+* **terraform:** add j.md ([d886bcc](https://github.com/filipefigueredo/blackcats/commit/d886bccfd50e4c8f188fc0cf077e13b24479a8d8))
+* **terraform:** add j.md ([11bc58d](https://github.com/filipefigueredo/blackcats/commit/11bc58d7d9e13e993df4eaeb6b747aeb6833764b))
+
 ## [1.0.0](https://github.com/filipefigueredo/blackcats/compare/v0.1.0...v1.0.0) (2022-04-20)
 
 
